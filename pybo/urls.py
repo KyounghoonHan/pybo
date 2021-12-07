@@ -1,23 +1,34 @@
 from django.urls import path
 
-from .views import base_views, question_views, answer_views, comment_views, vote_views
+from .views import base_views, question_views, answer_views, comment_views, vote_views, board_question_views
 
 app_name = 'pybo'
 
 urlpatterns = [
     # base_views.py
-    path('',
-         base_views.index, name='index'),
-    path('<int:question_id>/',
-         base_views.detail, name='detail'),
+#     path('', base_views.index, name='index'),
+#     path('<int:question_id>/', base_views.detail, name='detail'),
+    path("question/list/qna/", base_views.index, name="index"),
+    path("question/list/board/", base_views.board, name="board"),
+    path('question/detail/<int:question_id>/', base_views.detail, name='detail'),
 
-    # question_views.py
-    path('question/create/',
+    # qna_question_views.py
+    path('question/create/qna',
          question_views.question_create, name='question_create'),
-    path('question/modify/<int:question_id>/',
+    path('question/modify/qna/<int:question_id>/',
          question_views.question_modify, name='question_modify'),
-    path('question/delete/<int:question_id>/',
+    path('question/delete/qna/<int:question_id>/',
          question_views.question_delete, name='question_delete'),
+
+    # board_question_views.py
+    path('question/create/board',
+         board_question_views.question_create, name='board_create'),
+    path('question/modify/board/<int:question_id>/',
+         board_question_views.question_modify, name='board_modify'),
+    path('question/delete/board/<int:question_id>/',
+         board_question_views.question_delete, name='board_delete'),
+
+
 
     # answer_views.py
     path('answer/create/<int:question_id>/',

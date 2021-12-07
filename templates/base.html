@@ -14,11 +14,19 @@
 <body>
 <!-- 네비게이션바 -->
 {% include "navbar.html" %}
-<!-- 기본 템플릿 안에 삽입될 내용 Start -->
 
-{% block content %}
-{% endblock %}
-<!-- 기본 템플릿 안에 삽입될 내용 End -->
+<!-- 카테고리바 -->
+<div class="row justify-content-between my-3">
+    <div class="col-2">
+    {% include "category.html" %}
+    </div>
+
+    <!-- 기본 템플릿 안에 삽입될 내용 Start -->
+    <div class="col-10">
+    {% block content %}
+    {% endblock %}
+    </div>
+</div>
 
 <!-- jQuery JS -->
 <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
