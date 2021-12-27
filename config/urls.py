@@ -15,11 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
 from pybo.views import base_views
 
 urlpatterns = [
-    path('', base_views.index, name="index"), # 'domain/' 에 해당되는 path
+    path('', base_views.index, name="index"), # 'domain address/' 에 해당되는 path
     path('admin/', admin.site.urls),
     path('pybo/', include("pybo.urls")),
     path('common/', include("common.urls")),
 ]
+
+handler404 = 'common.views.page_not_found'

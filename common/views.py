@@ -47,3 +47,8 @@ def board(request, user_id):
     
     context = {"question_list":page_obj, "page":page, "so":so, "user_id":user_id}    
     return render(request, "common/board.html", context)
+
+def page_not_found(request, exception):
+    """Handling 404 error"""
+    return render(request, 'common/404.html', {})
+    
