@@ -7,13 +7,15 @@ from django.db.models import Q, Count
 from ..models import Question, Answer
 
 # Create your views here.
+
+# pybo 목록 출력
 def index(request):
-    # pybo 목록 출력
-    # 입력 파라미터
+    # URL에서 get parameter 가져오기
     page = request.GET.get("page", 1) # 페이지  If key 'page' does not exist, return 1 instead
     kw = request.GET.get("kw", "") # 검색어
     so = request.GET.get("so", "recent") # 정렬기준
-    # 조회
+
+    # 정렬 기준 정하기
     if so == "recommend":
         # question_list = Question.objects.annotate(num_voter=Count("voter")).order_by("-num_voter", "-create_date")
         question_list = Question.objects.filter(category="qna").annotate(num_voter=Count("voter")).order_by("-num_voter", "-create_date")       
@@ -31,6 +33,7 @@ def index(request):
             Q(author__username__icontains=kw) | # 글쓴이 검색
             Q(answer__author__username__icontains=kw) # 답변자 검색
         ).distinct()
+        
     # 페이징 처리
     paginator = Paginator(question_list, 10) # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
@@ -68,7 +71,7 @@ def board(request):
     context = {"question_list":page_obj, "page":page, "kw":kw, "so":so}
     return render(request, "pybo/board_question_list.html", context)
 
-# pybo 상세 내용 출력
+# pybo 질문에 대한 답변 내용 출력
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
 
